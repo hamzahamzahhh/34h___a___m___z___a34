@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملف حمزة الشخصي</title>
+    <style>
+        /* خلفية متدرجة مع أنيميشن */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff5f6d, #ffc371, #43cea2, #185a9d);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* حركة الخلفية */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* تصميم لصورة الملف الشخصي */
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+
+        /* تصميم النص التعريفي */
+        .profile-info {
+            margin-top: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* أزرار الروابط */
+        .btn {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 30px;
+            background-color: white;
+            color: #ff5f6d;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #43cea2;
+            color: white;
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* تذييل الموقع */
+        footer {
+            margin-top: 50px;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* تنسيق الروابط */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- صورة الملف الشخصي -->
+    <img src="https://i.imgur.com/MTtksHh.jpg" alt="صورة الملف الشخصي" class="profile-pic">
+
+    <!-- معلومات الملف الشخصي -->
+    <div class="profile-info">
+        <p>🇲🇦 أنا من المغرب - أكادير</p>
+        <p>h_a_m_z_a_34_33@</p>
+    </div>
+
+    <!-- الروابط -->
+    <a href="https://www.instagram.com/33_h_a_m_z_a_34/profilecard/?igsh=ZXoxbHkzZWh3dXUz" class="btn">زيارة إنستغرام</a>
+
+    <!-- التذييل -->
+    <footer>
+        <p>© 2024 حمزة</p>
+    </footer>
+
+</body>
+</html>
