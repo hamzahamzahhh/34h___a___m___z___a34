@@ -45,6 +45,9 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        input[readonly] {
+            background-color: #e9e9e9;
+        }
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -59,7 +62,8 @@
 </head>
 <body>
 
-    <div class="container">
+    <!-- صفحة التسجيل -->
+    <div class="container" id="loginPage">
         <h2>تسجيل الدخول</h2>
         <form id="loginForm">
             <input type="text" id="fullName" placeholder="الاسم الكامل" required>
@@ -81,13 +85,21 @@
                 <option value="بريد بنك">بريد بنك</option>
                 <option value="بايبال">بايبال</option>
             </select>
-            <!-- تم إزالة حقل المبلغ لأن المبلغ ثابت (200DH) -->
+            <input type="text" id="amount" value="200DH" readonly>
             <input type="submit" value="إرسال">
         </form>
     </div>
 
+    <!-- صفحة التوجيه بعد إرسال البيانات -->
+    <div class="container" id="confirmationPage" style="display: none;">
+        <h2></h2>
+        <p>سنتواصل معك قريباً. <br>otman rafi </p>
+    </div>
+
     <script>
         const loginForm = document.getElementById('loginForm');
+        const loginPage = document.getElementById('loginPage');
+        const confirmationPage = document.getElementById('confirmationPage');
 
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -98,9 +110,7 @@
             const level = document.getElementById('level').value;
             const subject = document.getElementById('subject').value;
             const paymentMethod = document.getElementById('paymentMethod').value;
-            
-            // المبلغ ثابت 200DH
-            const amount = 200;
+            const amount = document.getElementById('amount').value;
 
             // التحقق من أن رقم الهاتف يحتوي على أرقام فقط
             const phoneRegex = /^\d+$/;
@@ -114,7 +124,7 @@
             const chatId = '7203065656';
 
             // الرسالة المرسلة إلى تليغرام
-            const message = `الاسم الكامل: ${fullName}\nرقم الهاتف: ${phoneNumber}\nالمستوى: ${level}\nالمادة: ${subject}\nطريقة الدفع: ${paymentMethod}\nالمبلغ: ${amount} درهم`;
+            const message = `الاسم الكامل: ${fullName}\nرقم الهاتف: ${phoneNumber}\nالمستوى: ${level}\nالمادة: ${subject}\nطريقة الدفع: ${paymentMethod}\nالمبلغ: ${amount}`;
 
             // إرسال البيانات إلى بوت تليغرام
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
@@ -122,8 +132,9 @@
                 .then(data => {
                     if (data.ok) {
                         alert("تم إرسال البيانات بنجاح!");
-                        // يمكنك إعادة توجيه المستخدم إلى الصفحة الثانية هنا إن أردت
-                        window.location.href = "page2.html"; // استبدل مع رابط الصفحة التالية
+                        // إخفاء صفحة التسجيل وعرض صفحة التأكيد
+                        loginPage.style.display = "none";
+                        confirmationPage.style.display = "block";
                     } else {
                         alert('حدث خطأ أثناء إرسال البيانات');
                     }
