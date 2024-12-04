@@ -3,212 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>نموذج الشراء</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap');
-
         body {
-            font-family: 'Cairo', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f9f9f9, #eaeaea);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #e9f5e9, #ffffff);
             color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-            transition: background-color 0.5s, color 0.5s;
+            margin: 0;
         }
-
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
+        .form-container {
+            background: #fff;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            width: 500px;
             text-align: center;
-            animation: fadeIn 1.2s ease-in-out;
+            border: 2px solid #4caf50;
         }
-
-        h2 {
-            color: #4CAF50;
-            font-size: 28px;
+        h1 {
+            color: #4caf50;
+            font-size: 26px;
             margin-bottom: 20px;
-            position: relative;
         }
-
-        h2::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background-color: #4CAF50;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -10px;
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            color: #4caf50;
         }
-
         input, select, button {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            outline: none;
-            font-size: 16px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        input, select {
-            background: rgba(255, 255, 255, 0.7);
-            color: #333;
-            border: 1px solid #ddd;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.5);
-        }
-
-        input[readonly] {
-            background: rgba(200, 200, 200, 0.3);
-            border: 1px solid rgba(200, 200, 200, 0.5);
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 20px;
-            cursor: pointer;
             padding: 10px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.1);
-            color: #4CAF50;
-            transition: transform 0.3s, background-color 0.3s;
+            margin-bottom: 15px;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            font-size: 14px;
         }
-
-        .theme-toggle:hover {
-            transform: rotate(360deg);
-            background-color: #4CAF50;
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2e7d32;
+            box-shadow: 0 0 5px #2e7d32;
+        }
+        button {
+            background-color: #4caf50;
             color: white;
+            font-size: 16px;
+            cursor: pointer;
         }
-
-        .dark-mode {
-            background: linear-gradient(135deg, #1d1d1d, #000);
-            color: #ddd;
+        button:hover {
+            background-color: #2e7d32;
         }
-
-        .dark-mode .container {
-            background: rgba(0, 0, 0, 0.8);
-            color: #ddd;
-        }
-
-        .dark-mode input, .dark-mode select, .dark-mode button {
-            background: rgba(50, 50, 50, 0.9);
-            border: 1px solid rgba(100, 100, 100, 0.7);
-        }
-
-        .dark-mode button {
-            background-color: #888;
+        .action-buttons a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4caf50;
             color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease;
         }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .action-buttons a:hover {
+            background-color: #2e7d32;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .popup {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+        .popup h2 {
+            margin: 0 0 10px;
+            color: #4caf50;
+        }
+        .popup p {
+            margin: 0 0 20px;
+        }
+        .popup button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background: #2e7d32;
+        }
+        .popup input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <div class="form-container">
+        <h1> مسار النجاح </h1>
+        <form id="purchaseForm" method="post" enctype="multipart/form-data">
+            <label for="name">الاسم الكامل</label>
+            <input type="text" id="name" name="name" required>
 
-    <div class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i>
-    </div>
+            <label for="phone">رقم الهاتف</label>
+            <input type="text" id="phone" name="phone" required>
 
-    <div class="container" id="loginPage">
-        <h2>تسجيل الدخول</h2>
-        <form id="loginForm">
-            <input type="text" id="fullName" placeholder="الاسم الكامل" required>
-            <input type="text" id="phoneNumber" placeholder="رقم الهاتف" required pattern="\d+" title="الرجاء إدخال أرقام فقط">
-            <select id="level" required>
-                <option value="">اختر المستوى</option>
-                <option value="أولى باك">أولى باك</option>
-                <option value="ثانية باك">ثانية باك</option>
-            </select>
-            <select id="subject" required>
-                <option value="">اختر المادة</option>
+            <label for="subject">المادة</label>
+            <select id="subject" name="subject" required>
                 <option value="الفيزياء">الفيزياء</option>
                 <option value="الرياضيات">الرياضيات</option>
             </select>
-            <label for="paymentReceipt">(بايبال كاش بلوس بريد بنك)رفع إيصال الدفع:</label>
-            <input type="file" id="paymentReceipt" accept="image/*" required>
-            <input type="text" id="amount" value="200DH" readonly>
+
+            <label for="level">المستوى</label>
+            <select id="level" name="level" required>
+                <option value="الأولى بكالوريا">الأولى بكالوريا</option>
+                <option value="الثانية بكالوريا">الثانية بكالوريا</option>
+            </select>
+
+            <label for="paymentProof">إثبات الدفع</label>
+            <input type="file" id="paymentProof" name="paymentProof" required>
+
             <button type="submit">إرسال</button>
         </form>
+
+        <div class="action-buttons">
+            <button onclick="verifyCode()">الدخول إلى مجموعة واتساب</button>
+            <a href="mailto:hrafi3141@gmail.com?subject=استفسار عن الدعم&body=يرجى كتابة استفسارك هنا..." title="الدعم عبر البريد الإلكتروني">الدعم</a>
+        </div>
+    </div>
+
+    <div class="overlay" id="popupOverlay">
+        <div class="popup" id="popupMessage">
+            <h2 id="popupTitle">التحقق من الكود</h2>
+            <p id="popupText">يرجى إدخال الكود للمتابعة:</p>
+            <input type="text" id="userCode" placeholder="أدخل الكود هنا">
+            <button onclick="submitCode()">تحقق</button>
+            <button onclick="closePopup()">إغلاق</button>
+        </div>
     </div>
 
     <script>
-        const loginForm = document.getElementById('loginForm');
+        const correctCode = "osndjdbdishhsvdhdbvd9373738widbjx";
 
-        loginForm.addEventListener('submit', async function(event) {
+        document.getElementById("purchaseForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const level = document.getElementById('level').value;
-            const subject = document.getElementById('subject').value;
-            const paymentReceipt = document.getElementById('paymentReceipt').files[0];
+            const formData = new FormData(this);
+            const botUrl = `https://api.telegram.org/bot8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o/sendMessage`;
+            const photoUrl = `https://api.telegram.org/bot8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o/sendPhoto`;
+            const chatId = '7203065656';
 
-            if (!fullName || !phoneNumber || !level || !subject || !paymentReceipt) {
-                alert("يرجى ملء جميع الحقول!");
-                return;
-            }
+            const message = `
+                الاسم: ${formData.get('name')}
+                الهاتف: ${formData.get('phone')}
+                المادة: ${formData.get('subject')}
+                المستوى: ${formData.get('level')}
+            `;
 
-            const formData = new FormData();
-            formData.append("chat_id", "7203065656"); // معرّف المحادثة
-            formData.append("photo", paymentReceipt);
-            formData.append("caption", `الاسم: ${fullName}\nرقم الهاتف: ${phoneNumber}\nالمستوى: ${level}\nالمادة: ${subject}`);
-
-            fetch(`https://api.telegram.org/bot8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o/sendPhoto`, {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("تم الإرسال بنجاح!");
-                } else {
-                    alert("حدث خطأ أثناء الإرسال.");
-                }
-            })
-            .catch(error => {
-                alert("خطأ في الإرسال: " + error.message);
+            fetch(botUrl, {
+                method: 'POST',
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             });
+
+            const file = formData.get("paymentProof");
+            const fileData = new FormData();
+            fileData.append("chat_id", chatId);
+            fileData.append("photo", file);
+
+            fetch(photoUrl, {
+                method: 'POST',
+                body: fileData,
+            })
+            .then(() => showPopup("تم بنجاح", "تم إرسال طلبك بنجاح! شكراً لتعاملك معنا."))
+            .catch(() => showPopup("خطأ", "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً."));
         });
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
+        function verifyCode() {
+            document.getElementById("popupOverlay").classList.add("active");
+        }
+
+        function submitCode() {
+            const userCode = document.getElementById("userCode").value;
+            if (userCode === correctCode) {
+                showPopup("نجاح", "تم التحقق من الكود. جاري توجيهك...");
+                setTimeout(() => {
+                    window.location.href = "https://chat.whatsapp.com/Jypv0oR7C1kCNpYKQHGHN8";
+                }, 2000);
+            } else {
+                showPopup("خطأ", "الكود غير صحيح. يرجى المحاولة مرة أخرى.");
+            }
+        }
+
+        function showPopup(title, text) {
+            document.getElementById("popupTitle").innerText = title;
+            document.getElementById("popupText").innerText = text;
+        }
+
+        function closePopup() {
+            document.getElementById("popupOverlay").classList.remove("active");
         }
     </script>
 </body>
-    </html>
+</html>
