@@ -97,6 +97,19 @@
             display: none;
             margin-top: 10px;
         }
+        #successMessage, #emptyFieldsMessage {
+            font-size: 16px;
+            color: #4caf50;
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            background-color: #e8f5e9;
+        }
+        #errorMessage {
+            color: #e53935;
+        }
     </style>
 </head>
 <body>
@@ -146,6 +159,9 @@
         </div>
     </div>
 
+    <div id="successMessage">تم إرسال البيانات بنجاح!</div>
+    <div id="emptyFieldsMessage">يرجى تعبئة جميع الحقول المطلوبة.</div>
+
     <script>
         const BOT_TOKEN = "8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o";
         const CHAT_ID = "7203065656";
@@ -157,8 +173,10 @@
             const level = document.getElementById("level").value;
             const proof = document.getElementById("proof").files[0];
 
-            if (!proof) {
-                alert("يرجى رفع صورة إثبات الدفع.");
+            // تحقق من تعبئة الحقول
+            if (!name || !phone || !subject || !level || !proof) {
+                document.getElementById("emptyFieldsMessage").style.display = "block";
+                document.getElementById("successMessage").style.display = "none";
                 return;
             }
 
@@ -174,7 +192,8 @@
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    alert("تم إرسال البيانات بنجاح!");
+                    document.getElementById("successMessage").style.display = "block";
+                    document.getElementById("emptyFieldsMessage").style.display = "none";
                 } else {
                     alert("حدث خطأ أثناء الإرسال.");
                 }
@@ -201,7 +220,7 @@
             const lockCode = document.getElementById("lockCode").value;
 
             if (lockCode === "pika.pika.2025") {
-                 errorMessage.style.display = "none";
+                errorMessage.style.display = "none";
                 whatsappButtons.style.display = "flex";
             } else {
                 errorMessage.style.display = "block";
