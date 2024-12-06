@@ -1,102 +1,71 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسار النجاح</title>
+    <title> مسار النجاح </title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #fff; /* أبيض */
-            color: #333;
-            padding: 20px;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-            border: 1px solid #2C8B57; /* أخضر */
-        }
-
-        h1 {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9; /* أخضر فاتح */
+            color: #2e7d32; /* أخضر غامق */
             text-align: center;
-            color: #2C8B57; /* أخضر */
-            font-size: 28px;
         }
-
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #4caf50; /* أخضر */
+        }
         label {
-            font-size: 14px;
-            color: #2C8B57; /* أخضر */
             display: block;
-            margin-top: 8px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2e7d32;
         }
-
         input, select, button {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
-        }
-
-        button {
-            background-color: #2C8B57; /* أخضر */
-            color: white;
-            cursor: pointer;
             font-size: 16px;
         }
-
-        button:hover {
-            background-color: #267741;
+        input:focus, select:focus {
+            border-color: #4caf50; /* أخضر */
+            outline: none;
         }
-
-        .action-buttons {
-            text-align: center;
-        }
-
-        .action-buttons a {
-            text-decoration: none;
-            background-color: #4682B4; /* أزرق */
+        button {
+            background-color: #4caf50; /* أخضر */
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: inline-block;
+            cursor: pointer;
+            font-size: 18px;
         }
-
-        .action-buttons a:hover {
-            background-color: #3b7b9b;
+        button:hover {
+            background-color: #388e3c; /* أخضر غامق */
         }
-
-        /* تصميم الرسالة الناجحة */
-        .success-message {
+        .modal {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 128, 0, 0.9); /* أخضر */
-            color: white;
+            width: 90%;
+            max-width: 400px;
+            background: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-            text-align: center;
-            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            width: 300px;
+            border: 2px solid #4caf50; /* أخضر */
         }
-
-        .success-message p {
-            margin: 0;
+        .modal.show {
+            display: block;
         }
-
-        /* تصميم النافذة المنبثقة */
         .overlay {
             display: none;
             position: fixed;
@@ -104,172 +73,142 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
-
-        .popup {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
+        .overlay.show {
+            display: block;
         }
-
-        .popup input {
-            width: 80%;
+        .whatsapp-buttons {
+            display: none;
+        }
+        .whatsapp-buttons button {
+            width: 45%;
+            margin: 5px 2.5%;
+            background-color: #25D366; /* أخضر واتساب */
+            color: white;
+        }
+        .whatsapp-buttons button:hover {
+            background-color: #1EBE57;
+        }
+        #errorMessage {
+            font-size: 14px;
+            color: red;
+            display: none;
             margin-top: 10px;
         }
-
-        .popup button {
-            margin-top: 10px;
-        }
-
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h1>مسار النجاح</h1>
-        <form id="purchaseForm" method="post" enctype="multipart/form-data">
-            <label for="name">الاسم الكامل</label>
-            <input type="text" id="name" name="name" required>
 
-            <label for="phone">رقم الهاتف</label>
-            <input type="text" id="phone" name="phone" required>
+    <form id="telegramForm">
+        <label>الاسم الكامل:</label>
+        <input type="text" id="name" required>
 
-            <label for="subject">المادة</label>
-            <select id="subject" name="subject" required>
-                <option value="الفيزياء">الفيزياء</option>
-                <option value="الرياضيات">الرياضيات</option>
-            </select>
+        <label>رقم الهاتف:</label>
+        <input type="text" id="phone" required>
 
-            <label for="level">المستوى</label>
-            <select id="level" name="level" required>
-                <option value="الأولى بكالوريا">الأولى بكالوريا</option>
-                <option value="الثانية بكالوريا">الثانية بكالوريا</option>
-            </select>
+        <label>اختيار المادة:</label>
+        <select id="subject" required>
+            <option value="الفيزياء">الفيزياء</option>
+            <option value="الرياضيات">الرياضيات</option>
+        </select>
 
-            <label for="paymentProof">إثبات الدفع</label>
-            <input type="file" id="paymentProof" name="paymentProof" required>
+        <label>اختيار المستوى:</label>
+        <select id="level" required>
+            <option value="السنة الأولى بكالوريا">السنة الأولى بكالوريا</option>
+            <option value="السنة الثانية بكالوريا">السنة الثانية بكالوريا</option>
+        </select>
 
-            <button type="submit">إرسال</button>
-        </form>
+        <label>إثبات الدفع:</label>
+        <input type="file" id="proof" required>
 
-        <div class="action-buttons">
-            <button onclick="verifyCode()">الدخول إلى مجموعة واتساب</button>
-            <a href="mailto:hrafi3141@gmail.com?subject=استفسار عن الدعم&body=يرجى كتابة استفسارك هنا..." title="الدعم عبر البريد الإلكتروني">الدعم</a>
+        <button type="button" onclick="sendToTelegram()">إرسال البيانات</button>
+    </form>
+
+    <button id="whatsappButton">الدخول إلى مجموعة واتساب</button>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="modal" id="modal">
+        <label>  اكتب الاسم الخاص بك  :</label>
+        <input type="text" id="whatsappName" placeholder="مثال: أحمد" required>
+
+        <label>كود القفل:</label>
+        <input type="text" id="lockCode" placeholder="أدخل الكود هنا" required>
+
+        <button type="button" onclick="verifyCode()">تأكيد</button>
+        <p id="errorMessage">الكود خطأ، حاول مرة أخرى.</p>
+
+        <div class="whatsapp-buttons" id="whatsappButtons">
+            <button onclick="window.open('https://chat.whatsapp.com/Jypv0oR7C1kCNpYKQHGHN8', '_blank')">1Bac</button>
+            <button onclick="window.open('https://chat.whatsapp.com/CiROIYpnCuOLK5Oua6wa2J', '_blank')">2Bac</button>
         </div>
-    </div>
-
-    <div class="overlay" id="popupOverlay">
-        <div class="popup" id="popupMessage">
-            <h2 id="popupTitle">التحقق من الكود</h2>
-            <p id="popupText">يرجى إدخال الكود للمتابعة:</p>
-            <input type="text" id="userCode" placeholder="أدخل الكود هنا">
-            <button onclick="submitCode()">تحقق</button>
-            <button onclick="closePopup()">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="success-message" id="successMessage">
-        <p>تم بنجاح! سيصلك الكود لدخول مجموعة واتساب مع الشروحات.</p>
     </div>
 
     <script>
-        const correctCode = "osndjdbdishhsvdhdbvd9373738widbjx"; // الكود الصحيح
+        const BOT_TOKEN = "8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o";
+        const CHAT_ID = "7203065656";
 
-        // إرسال النموذج إلى بوت التليجرام
-        document.getElementById("purchaseForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // لمنع إعادة تحميل الصفحة
+        function sendToTelegram() {
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const subject = document.getElementById("subject").value;
+            const level = document.getElementById("level").value;
+            const proof = document.getElementById("proof").files[0];
 
-            const formData = new FormData(this);
-            const botUrl = `https://api.telegram.org/bot8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o/sendMessage`;
-            const photoUrl = `https://api.telegram.org/bot8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o/sendPhoto`;
-            const chatId = '7203065656';
+            if (!proof) {
+                alert("يرجى رفع صورة إثبات الدفع.");
+                return;
+            }
 
-            const message = `
-                الاسم: ${formData.get('name')}
-                الهاتف: ${formData.get('phone')}
-                المادة: ${formData.get('subject')}
-                المستوى: ${formData.get('level')}
-            `;
+            const formData = new FormData();
+            formData.append("chat_id", CHAT_ID);
+            formData.append("caption", `الاسم: ${name}\nرقم الهاتف: ${phone}\nالمادة: ${subject}\nالمستوى: ${level}`);
+            formData.append("document", proof);
 
-            // إرسال النص إلى البوت
-            fetch(botUrl, {
-                method: 'POST',
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            // إرسال الصورة
-            const file = formData.get("paymentProof");
-            const fileData = new FormData();
-            fileData.append("chat_id", chatId);
-            fileData.append("photo", file);
-
-            fetch(photoUrl, {
-                method: 'POST',
-                body: fileData,
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
+                method: "POST",
+                body: formData,
             })
-            .then(() => {
-                // عرض الرسالة الناجحة لمدة 5 ثوانٍ
-                showSuccessMessage("تم بنجاح! سيصلك الكود لدخول مجموعة واتساب مع الشروحات.");
-            })
-            .catch(() => {
-                // في حالة حدوث خطأ أثناء إرسال الطلب
-                alert("حدث خطأ أثناء إرسال الطلب. يرجى المحاولة لاحقاً.");
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert("تم إرسال البيانات بنجاح!");
+                } else {
+                    alert("حدث خطأ أثناء الإرسال.");
+                }
             });
+        }
+
+        const whatsappButton = document.getElementById("whatsappButton");
+        const modal = document.getElementById("modal");
+        const overlay = document.getElementById("overlay");
+        const whatsappButtons = document.getElementById("whatsappButtons");
+        const errorMessage = document.getElementById("errorMessage");
+
+        whatsappButton.addEventListener("click", () => {
+            modal.classList.add("show");
+            overlay.classList.add("show");
         });
 
-        // عرض الرسالة عند النجاح
-        function showSuccessMessage(message) {
-            const successMessageElement = document.getElementById("successMessage");
-            successMessageElement.style.display = 'block'; // عرض الرسالة
-            setTimeout(() => {
-                successMessageElement.style.display = 'none'; // إخفاء الرسالة بعد 5 ثوانٍ
-            }, 5000);
-        }
+        overlay.addEventListener("click", () => {
+            modal.classList.remove("show");
+            overlay.classList.remove("show");
+        });
 
         function verifyCode() {
-            // عند الضغط على زر الدخول الى مجموعة واتساب، يظهر نافذة التحقق
-            showPopup("التحقق من الكود", "يرجى إدخال الكود للمتابعة:");
-        }
+            const lockCode = document.getElementById("lockCode").value;
 
-        function showPopup(title, message) {
-            const popupTitle = document.getElementById("popupTitle");
-            const popupText = document.getElementById("popupText");
-            const popupOverlay = document.getElementById("popupOverlay");
-
-            popupTitle.textContent = title;
-            popupText.textContent = message;
-
-            // إظهار النافذة المنبثقة
-            popupOverlay.style.display = "flex";
-        }
-
-        function closePopup() {
-            // إغلاق النافذة المنبثقة
-            const popupOverlay = document.getElementById("popupOverlay");
-            popupOverlay.style.display = "none";
-        }
-
-        function submitCode() {
-            const userCode = document.getElementById("userCode").value;
-
-            if (userCode === correctCode) {
-                alert("الكود صحيح! سيتم توجيهك إلى مجموعة واتساب.");
-                window.location.href = "https://chat.whatsapp.com/Jypv0oR7C1kCNpYKQHGHN8"; // رابط المجموعة
+            if (lockCode === "pika.pika.2025") {
+                 errorMessage.style.display = "none";
+                whatsappButtons.style.display = "flex";
             } else {
-                alert("الكود غير صحيح. يرجى المحاولة مرة أخرى.");
+                errorMessage.style.display = "block";
+                whatsappButtons.style.display = "none";
             }
         }
     </script>
+
 </body>
-    </html>
+</html>
